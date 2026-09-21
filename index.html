@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+
+  <title>my little todo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+      background-image: url(walpaper.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      min-height: 100vh;
+      margin: 0;
+      margin: 0;
+      font-family: "Pixelated MS Sans Serif", Arial;
+    }
+
+    .app {
+      display: grid;
+      max-width: 560px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+
+    .box {
+      padding: 12px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    .box h1 {
+      font-size: 3rem;
+      text-align: center;
+    }
+
+    .box p {
+      text-align: center;
+    }
+
+    h1,
+    p {
+      margin: 0;
+    }
+
+    .add,
+    .item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .add button,
+    .item button {
+      cursor: pointer;
+    }
+
+    .item label {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .item label.done {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+
+    #list {
+      display: grid;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+    <div class="title-bar">
+      <div class="title-bar-text">Tugas Window</div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize"></button>
+        <button aria-label="Restore"></button>
+        <button aria-label="Close"></button>
+      </div>
+    </div>
+
+    <section class="box window" style="display:grid; gap:12px">
+
+      <h1>List beban perkuliahan</h1>
+      <p>kita usahakan yang terbaik !!</p>
+
+      <div class="add">
+        <div class="field-row-stacked">
+          <input id="text22" placeholder="Tugas apa yang belum dikerjain" type="text" />
+
+        </div>
+        <button id="add">+ Tambah</button>
+      </div>
+
+      <ul id="list"></ul>
+    </section>
+  </main>
+  <script>
+    const input = document.getElementById('text22');
+    const list = document.getElementById('list');
+
+    const addTodo = text => {
+      const li = document.createElement('li');
+      const fieldset = document.createElement('fieldset');
+      const legend = document.createElement('legend');
+      const row = document.createElement('div');
+      const label = document.createElement('label');
+      const del = document.createElement('button');
+
+      legend.textContent = 'List tugas';
+      row.className = 'field-row item';
+      label.textContent = text;
+      del.textContent = 'Hapus';
+      del.addEventListener('click', () => li.remove());
+      label.addEventListener('click', () => label.classList.toggle('done'));
+      row.append(label, del);
+      fieldset.append(legend, row);
+      li.append(fieldset);
+      list.append(li);
+    };
+
+    const submit = () => {
+      const text = input.value.trim();
+      if (!text) return;
+      addTodo(text);
+      input.value = '';
+      input.focus();
+    };
+
+    document.getElementById('add').addEventListener('click', submit);
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') submit();
+    });
+
+    ['Membuat Website to-do list', 'Kerjain Jarkom Modul 2', 'Beli Geprek Mazzeh'].forEach(addTodo);
+  </script>
+
+</body>
+
+</html>
