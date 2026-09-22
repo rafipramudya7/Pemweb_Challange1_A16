@@ -127,13 +127,24 @@
         <button class="filter-btn" id="filter-active">Progres</button>
         <button class="filter-btn" id="filter-done">Selesai</button>
       </div>
-
+      
+      <p id="counter" style="font-size: 11px; margin-top: 8px;">Sisa tugas: 0</p>
+      
       <ul id="list"></ul>
     </section>
   </main>
   <script>
     const input = document.getElementById('text22');
     const list = document.getElementById('list');
+
+    const updateCounter = () => {
+      const counterEl = document.getElementById('counter');
+      if (!counterEl) return;
+      const allItems = list.querySelectorAll('li').length;
+      const doneItems = list.querySelectorAll('label.done').length;
+      const activeItems = allItems - doneItems;
+      counterEl.textContent = `Sisa tugas: ${activeItems} dari ${allItems}`;
+    };
 
     const addTodo = text => {
       const li = document.createElement('li');
@@ -147,12 +158,19 @@
       row.className = 'field-row item';
       label.textContent = text;
       del.textContent = 'Hapus';
-      del.addEventListener('click', () => li.remove());
-      label.addEventListener('click', () => label.classList.toggle('done'));
+      del.addEventListener('click', () => {
+        li.remove();
+        updateCounter();
+      });
+      label.addEventListener('click', () => {
+        label.classList.toggle('done');
+        updateCounter();
+      });
       row.append(label, del);
       fieldset.append(legend, row);
       li.append(fieldset);
       list.append(li);
+      updateCounter();
     };
 
     const submit = () => {
@@ -189,6 +207,8 @@
         });
       });
     });
+
+  updateCounter();
   </script>
 
 </body>
