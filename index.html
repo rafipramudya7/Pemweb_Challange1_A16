@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -79,6 +80,12 @@
       color: gray;
     }
 
+    /* CSS tambahan khusus container tombol filter  */
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }    
 
     #list {
       display: grid;
@@ -112,6 +119,13 @@
 
         </div>
         <button id="add">+ Tambah</button>
+      </div>
+
+      <!-- Tambahan Tombol Filter -->
+      <div class="filters">
+        <button class="filter-btn" id="filter-all">Semua</button>
+        <button class="filter-btn" id="filter-active">Progres</button>
+        <button class="filter-btn" id="filter-done">Selesai</button>
       </div>
 
       <ul id="list"></ul>
@@ -155,6 +169,26 @@
     });
 
     ['Tugas BMS', 'Kerjain Jarkom ', 'Tugas Panitia ARA'].forEach(addTodo);
+
+    // Tambahan kode untuk filter
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const items = list.querySelectorAll('li');
+
+        items.forEach(item => {
+          const label = item.querySelector('label');
+          if (button.id === 'filter-all') {
+            item.style.display = '';
+          } else if (button.id === 'filter-active') {
+            item.style.display = label.classList.contains('done') ? 'none' : '';
+          } else if (button.id === 'filter-done') {
+            item.style.display = label.classList.contains('done') ? '' : 'none';
+          }
+        });
+      });
+    });
   </script>
 
 </body>
