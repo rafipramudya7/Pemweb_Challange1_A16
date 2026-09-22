@@ -137,6 +137,7 @@
     const input = document.getElementById('text22');
     const list = document.getElementById('list');
 
+    //Fungsi untuk ngehitung sisa tugas
     const updateCounter = () => {
       const counterEl = document.getElementById('counter');
       if (!counterEl) return;
@@ -158,6 +159,7 @@
       row.className = 'field-row item';
       label.textContent = text;
       del.textContent = 'Hapus';
+      //Update saat item dihapus
       del.addEventListener('click', () => {
         li.remove();
         updateCounter();
